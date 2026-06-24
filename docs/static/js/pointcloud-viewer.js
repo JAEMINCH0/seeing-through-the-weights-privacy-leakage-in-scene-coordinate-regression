@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 import { PLYLoader } from "three/addons/loaders/PLYLoader.js";
 
 const viewers = document.querySelectorAll(".pointcloud-viewer");
@@ -18,16 +18,22 @@ viewers.forEach((container) => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.08;
-  controls.screenSpacePanning = true;
+  const controls = new TrackballControls(camera, renderer.domElement);
+  controls.rotateSpeed = 3.0;
+  controls.zoomSpeed = 1.2;
+  controls.panSpeed = 0.8;
+  controls.noRotate = false;
+  controls.noZoom = false;
+  controls.noPan = false;
+  controls.staticMoving = false;
+  controls.dynamicDampingFactor = 0.12;
 
   const resize = () => {
     const { width, height } = container.getBoundingClientRect();
     renderer.setSize(width, height, false);
     camera.aspect = width / Math.max(height, 1);
     camera.updateProjectionMatrix();
+    controls.handleResize();
   };
 
   const resizeObserver = new ResizeObserver(resize);
