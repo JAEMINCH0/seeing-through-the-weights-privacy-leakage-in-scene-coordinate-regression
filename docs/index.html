@@ -24,6 +24,14 @@
 
     <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
     <link rel="stylesheet" href="static/css/site.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
   </head>
   <body>
     <main>
@@ -35,8 +43,10 @@
           <span>Jaemin Cho*</span>,
           <span>Utku Ozbulak</span>,
           <span>Byungkon Kang</span>,
-          <span>Francois Rameau</span>
+          <span>Francois Rameau†</span>
         </p>
+
+        <p class="contribution-notes">*Equal contribution &nbsp;&nbsp; † Corresponding author</p>
 
         <p class="affiliations">
           <span>Stony Brook University</span>,
@@ -48,11 +58,11 @@
         <p class="venue">ECCV 2026</p>
 
         <nav class="links" aria-label="Paper links">
-          <a class="is-disabled" href="./" aria-disabled="true">
+          <a href="./">
             <span class="link-icon" aria-hidden="true">📄</span>
             <span>Paper</span>
           </a>
-          <a class="is-disabled" href="./" aria-disabled="true">
+          <a href="./">
             <span class="link-icon" aria-hidden="true">💻</span>
             <span>Code</span>
           </a>
@@ -92,13 +102,84 @@
         </figure>
       </section>
 
-      <section class="section" aria-labelledby="qualitative-title">
+      <section class="section" id="qualitative" aria-labelledby="qualitative-title">
         <h2 id="qualitative-title">Qualitative Comparison</h2>
+        <div class="model-container">
+          <div class="model-wrapper">
+            <div class="model-label">Private Scene</div>
+            <div
+              class="pointcloud-viewer"
+              data-ply="static/models/private_ace_office_colored.ply"
+              data-label="Private Scene"
+            ></div>
+          </div>
+          <div class="model-wrapper">
+            <div class="model-label">Recovered Scene</div>
+            <div
+              class="pointcloud-viewer"
+              data-ply="static/models/recovered_ace_office_colored.ply"
+              data-label="Recovered Scene"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="videos" aria-labelledby="videos-title">
+        <h2 id="videos-title">Videos</h2>
+        <div class="video-grid">
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_office_web.webp">
+              <source src="static/videos/ace_visualization_office_web.mp4" type="video/mp4">
+            </video>
+            <h3>Office</h3>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_redkitchen_web.webp">
+              <source src="static/videos/ace_visualization_redkitchen_web.mp4" type="video/mp4">
+            </video>
+            <h3>Red Kitchen</h3>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_chess_web.webp">
+              <source src="static/videos/ace_visualization_chess_web.mp4" type="video/mp4">
+            </video>
+            <h3>Chess</h3>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_pumpkin_web.webp">
+              <source src="static/videos/ace_visualization_pumpkin_web.mp4" type="video/mp4">
+            </video>
+            <h3>Pumpkin</h3>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_fire_web.webp">
+              <source src="static/videos/ace_visualization_fire_web.mp4" type="video/mp4">
+            </video>
+            <h3>Fire</h3>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_heads_web.webp">
+              <source src="static/videos/ace_visualization_heads_web.mp4" type="video/mp4">
+            </video>
+            <h3>Heads</h3>
+          </article>
+        </div>
+      </section>
+
+      <section class="section narrow" id="bibtex" aria-labelledby="bibtex-title">
+        <h2 id="bibtex-title">BibTeX</h2>
+        <pre><code>@inproceedings{nasypanyi2026seeing,
+  title={Seeing Through the Weights: Privacy Leakage in Scene Coordinate Regression},
+  author={Nasypanyi, Oleksii and Cho, Jaemin and Ozbulak, Utku and Kang, Byungkon and Rameau, Francois},
+  booktitle={European Conference on Computer Vision (ECCV)},
+  year={2026}
+}</code></pre>
       </section>
     </main>
 
     <footer>
       <p>Seeing Through the Weights: Privacy Leakage in Scene Coordinate Regression</p>
     </footer>
+    <script type="module" src="static/js/pointcloud-viewer.js"></script>
   </body>
 </html>
