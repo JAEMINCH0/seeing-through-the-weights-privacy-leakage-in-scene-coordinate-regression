@@ -301,6 +301,10 @@ h2 {
   text-align: center;
 }
 
+.viewer-status[hidden] {
+  display: none;
+}
+
 .results-switcher {
   max-width: 820px;
   margin: 0 auto;
