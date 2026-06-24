@@ -19,7 +19,7 @@ viewers.forEach((container) => {
   container.appendChild(renderer.domElement);
 
   const controls = new TrackballControls(camera, renderer.domElement);
-  controls.rotateSpeed = 3.0;
+  controls.rotateSpeed = 1.0;
   controls.zoomSpeed = 1.2;
   controls.panSpeed = 0.8;
   controls.noRotate = false;
