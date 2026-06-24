@@ -22,87 +22,38 @@
     <meta property="og:url" content="https://jaeminch0.github.io/seeing-through-the-weights-privacy-leakage-in-scene-coordinate-regression/">
     <meta property="og:image" content="https://jaeminch0.github.io/seeing-through-the-weights-privacy-leakage-in-scene-coordinate-regression/static/images/teaser.webp">
 
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
     <link rel="stylesheet" href="static/css/site.css">
   </head>
   <body>
     <main>
       <section class="hero">
-        <div class="paper-label">ECCV 2026</div>
         <h1>Seeing Through the Weights: Privacy Leakage in Scene Coordinate Regression</h1>
 
         <p class="authors">
-          <span>Oleksii Nasypanyi*</span>
-          <span>Jaemin Cho*</span>
-          <span>Utku Ozbulak</span>
-          <span>Byungkon Kang</span>
+          <span>Oleksii Nasypanyi*</span>,
+          <span>Jaemin Cho*</span>,
+          <span>Utku Ozbulak</span>,
+          <span>Byungkon Kang</span>,
           <span>Francois Rameau</span>
         </p>
-        <p class="affiliations">
-          Stony Brook University &nbsp;·&nbsp; Ghent University Global Campus &nbsp;·&nbsp;
-          George Mason University Korea &nbsp;·&nbsp; SUNY Korea
-        </p>
-        <p class="equal-note">* Equal contribution</p>
+
+        <p class="venue">ECCV 2026 Accepted</p>
 
         <nav class="links" aria-label="Paper links">
           <a class="is-disabled" href="./" aria-disabled="true">Paper</a>
           <a href="https://github.com/JAEMINCH0/seeing-through-the-weights-privacy-leakage-in-scene-coordinate-regression">Code</a>
-          <a href="#videos">Videos</a>
-          <a href="#bibtex">BibTeX</a>
         </nav>
       </section>
 
-      <section class="section demo-section" aria-labelledby="demo-title">
-        <div class="section-heading">
-          <p class="eyebrow">Demo</p>
-          <h2 id="demo-title">Reconstructing Private 3D Scenes from SCR Weights</h2>
-        </div>
-        <div class="demo-layout">
-          <div class="video-shell">
-            <video
-              id="demo-video"
-              controls
-              playsinline
-              preload="metadata"
-              poster="static/images/ace_visualization_office_web.webp"
-            >
-              <source src="static/videos/ace_visualization_office_web.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="demo-copy">
-            <p class="lede">
-              Scene Coordinate Regression models are often treated as compact and privacy-preserving scene representations.
-              We show that an attacker can query the model with unrelated proxy images and recover both 3D geometry and coarse appearance from the training environment.
-            </p>
-            <div class="scene-tabs" aria-label="Demo scene selector">
-              <button class="scene-tab" type="button" data-video="office" aria-pressed="true">Office</button>
-              <button class="scene-tab" type="button" data-video="redkitchen" aria-pressed="false">Red Kitchen</button>
-              <button class="scene-tab" type="button" data-video="chess" aria-pressed="false">Chess</button>
-              <button class="scene-tab" type="button" data-video="pumpkin" aria-pressed="false">Pumpkin</button>
-              <button class="scene-tab" type="button" data-video="fire" aria-pressed="false">Fire</button>
-              <button class="scene-tab" type="button" data-video="heads" aria-pressed="false">Heads</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section teaser-section" aria-labelledby="teaser-title">
-        <div class="section-heading">
-          <p class="eyebrow">Attack Overview</p>
-          <h2 id="teaser-title">Proxy Queries Reveal Hidden Scene Geometry and Appearance</h2>
-        </div>
-        <figure class="figure-wide">
-          <img src="static/images/teaser.webp" alt="Query-based attack overview showing a private scene, proxy images, SCR model queries, and a recovered scene.">
-          <figcaption>
-            An SCR model trained on confidential images is queried with unrelated proxy images. Aggregated 3D predictions recover scene geometry, and feature inversion synthesizes approximate views.
-          </figcaption>
-        </figure>
+      <section class="teaser-video" aria-label="Demo video">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/images/ace_visualization_office_web.webp">
+          <source src="static/videos/ace_visualization_office_web.mp4" type="video/mp4">
+        </video>
       </section>
 
       <section class="section narrow" aria-labelledby="abstract-title">
-        <div class="section-heading">
-          <p class="eyebrow">Abstract</p>
-          <h2 id="abstract-title">SCR Representations Are Not Privacy-Preserving by Design</h2>
-        </div>
+        <h2 id="abstract-title">Abstract</h2>
         <div class="text-block">
           <p>
             Scene Coordinate Regression (SCR) methods are increasingly adopted for visual localization. In these approaches, the scene is implicitly encoded within a neural network that regresses a 3D world coordinate for each image pixel. Because the scene is represented only through the network parameters and not stored explicitly as images or maps, such methods are often assumed to be privacy-preserving. In this work, we show that this assumption is incorrect in practice.
@@ -117,10 +68,7 @@
       </section>
 
       <section class="section" aria-labelledby="method-title">
-        <div class="section-heading">
-          <p class="eyebrow">Method</p>
-          <h2 id="method-title">Query, Refine, Filter, Accumulate, and Invert</h2>
-        </div>
+        <h2 id="method-title">Method</h2>
         <figure class="figure-wide">
           <img src="static/images/method.webp" alt="Pipeline diagram of the white-box attack on SCR models.">
           <figcaption>
@@ -130,10 +78,7 @@
       </section>
 
       <section class="section" aria-labelledby="qualitative-title">
-        <div class="section-heading">
-          <p class="eyebrow">Qualitative Comparison</p>
-          <h2 id="qualitative-title">Recovered 3D and Appearance Across 7-Scenes</h2>
-        </div>
+        <h2 id="qualitative-title">Qualitative Comparison</h2>
         <figure class="figure-wide">
           <img src="static/images/qualitative-7scenes.webp" alt="Qualitative reconstruction results across Red Kitchen, Chess, Fire, Heads, Office, Pumpkin, and Stairs.">
           <figcaption>
@@ -143,10 +88,7 @@
       </section>
 
       <section class="section" id="videos" aria-labelledby="videos-title">
-        <div class="section-heading">
-          <p class="eyebrow">Videos</p>
-          <h2 id="videos-title">Scene-wise Reconstruction Progression</h2>
-        </div>
+        <h2 id="videos-title">Videos</h2>
         <div class="video-grid">
           <article class="video-card">
             <video controls playsinline preload="metadata" poster="static/images/ace_visualization_office_web.webp">
@@ -188,10 +130,7 @@
       </section>
 
       <section class="section narrow" id="bibtex" aria-labelledby="bibtex-title">
-        <div class="section-heading">
-          <p class="eyebrow">Citation</p>
-          <h2 id="bibtex-title">BibTeX</h2>
-        </div>
+        <h2 id="bibtex-title">BibTeX</h2>
         <pre><code>@inproceedings{nasypanyi2026seeing,
   title={Seeing Through the Weights: Privacy Leakage in Scene Coordinate Regression},
   author={Nasypanyi, Oleksii and Cho, Jaemin and Ozbulak, Utku and Kang, Byungkon and Rameau, Francois},
@@ -204,7 +143,5 @@
     <footer>
       <p>Seeing Through the Weights: Privacy Leakage in Scene Coordinate Regression</p>
     </footer>
-
-    <script src="static/js/site.js"></script>
   </body>
 </html>
