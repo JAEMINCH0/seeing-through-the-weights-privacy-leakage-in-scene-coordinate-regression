@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jaeminch0.github.io/seeing-through-the-weights-privacy-leakage-in-scene-coordinate-regression/sitemap.xml
