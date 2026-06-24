@@ -3,15 +3,12 @@ import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 import { PLYLoader } from "three/addons/loaders/PLYLoader.js";
 
 const viewers = document.querySelectorAll(".pointcloud-viewer");
-const pointCloudViewers = [];
 const defaultCameraOffset = new THREE.Vector3(0.15, 0.08, 2.3);
 const defaultViewState = {
   direction: defaultCameraOffset.clone().normalize(),
   distanceFactor: defaultCameraOffset.length(),
   up: new THREE.Vector3(0, 1, 0),
 };
-let sharedViewState = defaultViewState;
-let isSyncingView = false;
 
 viewers.forEach((container) => {
   const status = document.createElement("div");
@@ -96,30 +93,8 @@ viewers.forEach((container) => {
     controls.update();
   };
 
-  const viewer = {
-    applyViewState,
-    getViewState,
-    loadPly: null,
-  };
-
-  const syncViewFrom = () => {
-    if (isSyncingView || !activePoints) {
-      return;
-    }
-
-    sharedViewState = getViewState();
-    isSyncingView = true;
-    pointCloudViewers.forEach((otherViewer) => {
-      if (otherViewer !== viewer) {
-        otherViewer.applyViewState(sharedViewState);
-      }
-    });
-    isSyncingView = false;
-  };
-
-  controls.addEventListener("change", syncViewFrom);
-
   const loadPly = (url) => {
+    const viewState = activePoints ? getViewState() : defaultViewState;
     loadToken += 1;
     const currentToken = loadToken;
     setStatus("Loading 3D scene...");
@@ -156,7 +131,7 @@ viewers.forEach((container) => {
         camera.updateProjectionMatrix();
         controls.minDistance = radius * 0.18;
         controls.maxDistance = radius * 8;
-        applyViewState(sharedViewState);
+        applyViewState(viewState);
 
         status.hidden = true;
       },
@@ -169,9 +144,11 @@ viewers.forEach((container) => {
     );
   };
 
-  viewer.loadPly = loadPly;
-  pointCloudViewers.push(viewer);
-  container.__pointCloudViewer = viewer;
+  container.__pointCloudViewer = {
+    applyViewState,
+    getViewState,
+    loadPly,
+  };
   loadPly(container.dataset.ply);
 
   const animate = () => {
