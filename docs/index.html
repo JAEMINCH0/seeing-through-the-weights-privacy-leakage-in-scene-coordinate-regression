@@ -59,7 +59,12 @@
 
         <nav class="links" aria-label="Paper links">
           <a href="./">
-            <span class="link-icon link-icon-pdf" aria-hidden="true">pdf</span>
+            <svg class="link-icon link-icon-pdf-file" viewBox="0 0 58 58" aria-hidden="true">
+              <path d="M8.8 1.5h28.3l12.1 12.1v42.9H8.8z" fill="#ffffff"></path>
+              <path d="M37.1 1.5v12.1h12.1z" fill="#dddddd"></path>
+              <path d="M8.8 38.5h40.4v18H8.8z" fill="#d93025"></path>
+              <text x="29" y="51" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">pdf</text>
+            </svg>
             <span>Paper (coming soon)</span>
           </a>
           <a href="./">
@@ -129,49 +134,28 @@
 
       <section class="section" id="videos" aria-labelledby="videos-title">
         <h2 id="videos-title">7scenes Results</h2>
-        <div class="video-grid">
-          <article class="video-card">
-            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_office_web.webp">
-              <source src="static/videos/ace_visualization_office_web.mp4" type="video/mp4">
-            </video>
-            <h3>Office</h3>
-          </article>
-          <article class="video-card">
-            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_redkitchen_web.webp">
-              <source src="static/videos/ace_visualization_redkitchen_web.mp4" type="video/mp4">
-            </video>
-            <h3>Red Kitchen</h3>
-          </article>
-          <article class="video-card">
-            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_chess_web.webp">
-              <source src="static/videos/ace_visualization_chess_web.mp4" type="video/mp4">
-            </video>
-            <h3>Chess</h3>
-          </article>
-          <article class="video-card">
-            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_pumpkin_web.webp">
-              <source src="static/videos/ace_visualization_pumpkin_web.mp4" type="video/mp4">
-            </video>
-            <h3>Pumpkin</h3>
-          </article>
-          <article class="video-card">
-            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_fire_web.webp">
-              <source src="static/videos/ace_visualization_fire_web.mp4" type="video/mp4">
-            </video>
-            <h3>Fire</h3>
-          </article>
-          <article class="video-card">
-            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_heads_web.webp">
-              <source src="static/videos/ace_visualization_heads_web.mp4" type="video/mp4">
-            </video>
-            <h3>Heads</h3>
-          </article>
-          <article class="video-card">
-            <video controls playsinline preload="metadata" poster="static/images/ace_visualization_stairs_web.webp">
-              <source src="static/videos/ace_visualization_stairs_web.mp4" type="video/mp4">
-            </video>
-            <h3>Stairs</h3>
-          </article>
+        <div class="results-switcher" data-results-switcher>
+          <video
+            class="results-video"
+            data-results-video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="static/images/ace_visualization_office_web.webp"
+          >
+            <source src="static/videos/ace_visualization_office_web.mp4" type="video/mp4">
+          </video>
+          <div class="scene-tabs" aria-label="7-Scenes results">
+            <button class="scene-tab is-active" type="button" data-video="static/videos/ace_visualization_office_web.mp4" data-poster="static/images/ace_visualization_office_web.webp" aria-pressed="true">Office</button>
+            <button class="scene-tab" type="button" data-video="static/videos/ace_visualization_redkitchen_web.mp4" data-poster="static/images/ace_visualization_redkitchen_web.webp" aria-pressed="false">Red Kitchen</button>
+            <button class="scene-tab" type="button" data-video="static/videos/ace_visualization_chess_web.mp4" data-poster="static/images/ace_visualization_chess_web.webp" aria-pressed="false">Chess</button>
+            <button class="scene-tab" type="button" data-video="static/videos/ace_visualization_pumpkin_web.mp4" data-poster="static/images/ace_visualization_pumpkin_web.webp" aria-pressed="false">Pumpkin</button>
+            <button class="scene-tab" type="button" data-video="static/videos/ace_visualization_fire_web.mp4" data-poster="static/images/ace_visualization_fire_web.webp" aria-pressed="false">Fire</button>
+            <button class="scene-tab" type="button" data-video="static/videos/ace_visualization_heads_web.mp4" data-poster="static/images/ace_visualization_heads_web.webp" aria-pressed="false">Heads</button>
+            <button class="scene-tab" type="button" data-video="static/videos/ace_visualization_stairs_web.mp4" data-poster="static/images/ace_visualization_stairs_web.webp" aria-pressed="false">Stairs</button>
+          </div>
         </div>
       </section>
 
@@ -186,6 +170,7 @@
     <footer>
       <p>Seeing Through the Weights: Privacy Leakage in Scene Coordinate Regression</p>
     </footer>
+    <script src="static/js/results-video.js"></script>
     <script type="module" src="static/js/pointcloud-viewer.js"></script>
   </body>
 </html>
