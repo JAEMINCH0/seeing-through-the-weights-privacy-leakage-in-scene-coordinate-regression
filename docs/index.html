@@ -39,7 +39,7 @@
         <h1>Seeing Through the Weights: Privacy Leakage in Scene Coordinate Regression</h1>
 
         <p class="authors">
-          <span><a href="https://github.com/LexaNagiBator228">Oleksii Nasypanyi</a><sup>1,*</sup></span>,
+          <span><a href="https://www.linkedin.com/in/oleksii-nasypanyi-95a23a223/">Oleksii Nasypanyi</a><sup>1,*</sup></span>,
           <span><a href="https://jaeminch0.github.io/">Jaemin Cho</a><sup>1,*</sup></span>,
           <span><a href="https://utkuozbulak.github.io/">Utku Ozbulak</a><sup>2,3</sup></span>,
           <span><a href="https://sites.google.com/view/byungkon/home">Byungkon Kang</a><sup>4</sup></span>,
@@ -112,11 +112,21 @@
 
       <section class="section" id="qualitative" aria-labelledby="qualitative-title">
         <h2 id="qualitative-title">Qualitative Comparison</h2>
+        <div class="scene-tabs model-scene-tabs" aria-label="Qualitative comparison scenes" data-model-scene-tabs>
+          <button class="scene-tab is-active" type="button" data-private-ply="static/models/private_ace_office_colored.ply" data-recovered-ply="static/models/recovered_ace_office_colored.ply" aria-pressed="true">Office</button>
+          <button class="scene-tab" type="button" data-private-ply="static/models/private_ace_redkitchen_colored.ply" data-recovered-ply="static/models/recovered_ace_redkitchen_colored.ply" aria-pressed="false">Red Kitchen</button>
+          <button class="scene-tab" type="button" data-private-ply="static/models/private_ace_chess_colored.ply" data-recovered-ply="static/models/recovered_ace_chess_colored.ply" aria-pressed="false">Chess</button>
+          <button class="scene-tab" type="button" data-private-ply="static/models/private_ace_pumpkin_colored.ply" data-recovered-ply="static/models/recovered_ace_pumpkin_colored.ply" aria-pressed="false">Pumpkin</button>
+          <button class="scene-tab" type="button" data-private-ply="static/models/private_ace_fire_colored.ply" data-recovered-ply="static/models/recovered_ace_fire_colored.ply" aria-pressed="false">Fire</button>
+          <button class="scene-tab" type="button" data-private-ply="static/models/private_ace_heads_colored.ply" data-recovered-ply="static/models/recovered_ace_heads_colored.ply" aria-pressed="false">Heads</button>
+          <button class="scene-tab" type="button" data-private-ply="static/models/private_ace_stairs_colored.ply" data-recovered-ply="static/models/recovered_ace_stairs_colored.ply" aria-pressed="false">Stairs</button>
+        </div>
         <div class="model-container">
           <div class="model-wrapper">
             <div class="model-label">Private Scene</div>
             <div
               class="pointcloud-viewer"
+              data-model-viewer="private"
               data-ply="static/models/private_ace_office_colored.ply"
               data-label="Private Scene"
             ></div>
@@ -125,6 +135,7 @@
             <div class="model-label">Recovered Scene</div>
             <div
               class="pointcloud-viewer"
+              data-model-viewer="recovered"
               data-ply="static/models/recovered_ace_office_colored.ply"
               data-label="Recovered Scene"
             ></div>

@@ -41,41 +41,78 @@ viewers.forEach((container) => {
   resize();
 
   const loader = new PLYLoader();
-  loader.load(
-    container.dataset.ply,
-    (geometry) => {
-      geometry.computeBoundingBox();
-      const center = new THREE.Vector3();
-      geometry.boundingBox.getCenter(center);
-      geometry.translate(-center.x, -center.y, -center.z);
-      geometry.computeBoundingSphere();
+  let activePoints = null;
+  let loadToken = 0;
 
-      const radius = geometry.boundingSphere?.radius || 1;
-      const material = new THREE.PointsMaterial({
-        size: Math.max(radius / 420, 0.004),
-        sizeAttenuation: true,
-        vertexColors: Boolean(geometry.getAttribute("color")),
-      });
-
-      const points = new THREE.Points(geometry, material);
-      scene.add(points);
-
-      camera.near = Math.max(radius / 1000, 0.001);
-      camera.far = radius * 100;
-      camera.position.set(radius * 0.15, radius * 0.08, radius * 2.3);
-      camera.updateProjectionMatrix();
-      controls.target.set(0, 0, 0);
-      controls.minDistance = radius * 0.18;
-      controls.maxDistance = radius * 8;
-      controls.update();
-
-      status.remove();
-    },
-    undefined,
-    () => {
-      status.textContent = "Unable to load 3D scene.";
+  const clearPoints = () => {
+    if (!activePoints) {
+      return;
     }
-  );
+
+    scene.remove(activePoints);
+    activePoints.geometry.dispose();
+    activePoints.material.dispose();
+    activePoints = null;
+  };
+
+  const setStatus = (message) => {
+    status.textContent = message;
+    status.hidden = false;
+  };
+
+  const loadPly = (url) => {
+    loadToken += 1;
+    const currentToken = loadToken;
+    setStatus("Loading 3D scene...");
+    clearPoints();
+
+    loader.load(
+      url,
+      (geometry) => {
+        if (currentToken !== loadToken) {
+          geometry.dispose();
+          return;
+        }
+
+        geometry.computeBoundingBox();
+        const center = new THREE.Vector3();
+        geometry.boundingBox.getCenter(center);
+        geometry.translate(-center.x, -center.y, -center.z);
+        geometry.computeBoundingSphere();
+
+        const radius = geometry.boundingSphere?.radius || 1;
+        const material = new THREE.PointsMaterial({
+          size: Math.max(radius / 420, 0.004),
+          sizeAttenuation: true,
+          vertexColors: Boolean(geometry.getAttribute("color")),
+        });
+
+        const points = new THREE.Points(geometry, material);
+        activePoints = points;
+        scene.add(points);
+
+        camera.near = Math.max(radius / 1000, 0.001);
+        camera.far = radius * 100;
+        camera.position.set(radius * 0.15, radius * 0.08, radius * 2.3);
+        camera.updateProjectionMatrix();
+        controls.target.set(0, 0, 0);
+        controls.minDistance = radius * 0.18;
+        controls.maxDistance = radius * 8;
+        controls.update();
+
+        status.hidden = true;
+      },
+      undefined,
+      () => {
+        if (currentToken === loadToken) {
+          setStatus("Unable to load 3D scene.");
+        }
+      }
+    );
+  };
+
+  container.__pointCloudViewer = { loadPly };
+  loadPly(container.dataset.ply);
 
   const animate = () => {
     controls.update();
@@ -85,3 +122,28 @@ viewers.forEach((container) => {
 
   animate();
 });
+
+const modelSceneTabs = document.querySelector("[data-model-scene-tabs]");
+
+if (modelSceneTabs) {
+  const tabs = Array.from(modelSceneTabs.querySelectorAll(".scene-tab"));
+  const privateViewer = document.querySelector('[data-model-viewer="private"]');
+  const recoveredViewer = document.querySelector('[data-model-viewer="recovered"]');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      if (tab.classList.contains("is-active")) {
+        return;
+      }
+
+      tabs.forEach((button) => {
+        const isActive = button === tab;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+
+      privateViewer?.__pointCloudViewer?.loadPly(tab.dataset.privatePly);
+      recoveredViewer?.__pointCloudViewer?.loadPly(tab.dataset.recoveredPly);
+    });
+  });
+}

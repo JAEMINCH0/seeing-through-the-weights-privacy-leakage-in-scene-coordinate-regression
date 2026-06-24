@@ -246,6 +246,10 @@ h2 {
   margin: 0 auto;
 }
 
+.model-scene-tabs {
+  margin-bottom: 16px;
+}
+
 .model-wrapper {
   position: relative;
   flex: 1;
@@ -304,8 +308,8 @@ h2 {
 }
 
 .results-video {
-  width: 68%;
-  max-width: 620px;
+  width: 54%;
+  max-width: 500px;
   margin: 0 auto;
   aspect-ratio: 16 / 9;
   border-radius: 4px;
@@ -323,28 +327,28 @@ h2 {
 
 .scene-tab {
   appearance: none;
-  min-height: 34px;
-  padding: 6px 14px;
-  border: 1px solid #d0d7de;
-  border-radius: 999px;
+  min-height: 30px;
+  padding: 5px 11px;
+  border: 1px solid rgba(38, 70, 126, 0.35);
+  border-radius: 5px;
   background: #ffffff;
-  color: #222222;
-  font-family: "Google Sans", "Noto Sans", Arial, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
+  color: rgb(38, 70, 126);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1.2;
   cursor: pointer;
 }
 
 .scene-tab:hover,
 .scene-tab:focus-visible {
-  border-color: #999999;
-  background: #f5f5f5;
+  border-color: rgba(38, 70, 126, 0.7);
+  background: rgba(38, 70, 126, 0.08);
 }
 
 .scene-tab.is-active {
-  border-color: #363636;
-  background: #363636;
+  border-color: rgba(38, 70, 126, 0.8);
+  background: rgba(38, 70, 126, 0.8);
   color: #ffffff;
 }
 
