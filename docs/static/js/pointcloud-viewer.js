@@ -3,6 +3,15 @@ import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 import { PLYLoader } from "three/addons/loaders/PLYLoader.js";
 
 const viewers = document.querySelectorAll(".pointcloud-viewer");
+const pointCloudViewers = [];
+const defaultCameraOffset = new THREE.Vector3(0.15, 0.08, 2.3);
+const defaultViewState = {
+  direction: defaultCameraOffset.clone().normalize(),
+  distanceFactor: defaultCameraOffset.length(),
+  up: new THREE.Vector3(0, 1, 0),
+};
+let sharedViewState = defaultViewState;
+let isSyncingView = false;
 
 viewers.forEach((container) => {
   const status = document.createElement("div");
@@ -43,6 +52,7 @@ viewers.forEach((container) => {
   const loader = new PLYLoader();
   let activePoints = null;
   let loadToken = 0;
+  let currentRadius = 1;
 
   const clearPoints = () => {
     if (!activePoints) {
@@ -59,6 +69,55 @@ viewers.forEach((container) => {
     status.textContent = message;
     status.hidden = false;
   };
+
+  const getViewState = () => {
+    const direction = camera.position.clone().sub(controls.target);
+    const distance = direction.length();
+
+    if (distance === 0) {
+      direction.copy(defaultViewState.direction);
+    } else {
+      direction.normalize();
+    }
+
+    return {
+      direction,
+      distanceFactor: distance / Math.max(currentRadius, 0.001),
+      up: camera.up.clone(),
+    };
+  };
+
+  const applyViewState = (state) => {
+    const distance = Math.max(currentRadius, 0.001) * state.distanceFactor;
+    controls.target.set(0, 0, 0);
+    camera.position.copy(state.direction).multiplyScalar(distance).add(controls.target);
+    camera.up.copy(state.up);
+    camera.lookAt(controls.target);
+    controls.update();
+  };
+
+  const viewer = {
+    applyViewState,
+    getViewState,
+    loadPly: null,
+  };
+
+  const syncViewFrom = () => {
+    if (isSyncingView || !activePoints) {
+      return;
+    }
+
+    sharedViewState = getViewState();
+    isSyncingView = true;
+    pointCloudViewers.forEach((otherViewer) => {
+      if (otherViewer !== viewer) {
+        otherViewer.applyViewState(sharedViewState);
+      }
+    });
+    isSyncingView = false;
+  };
+
+  controls.addEventListener("change", syncViewFrom);
 
   const loadPly = (url) => {
     loadToken += 1;
@@ -81,6 +140,7 @@ viewers.forEach((container) => {
         geometry.computeBoundingSphere();
 
         const radius = geometry.boundingSphere?.radius || 1;
+        currentRadius = radius;
         const material = new THREE.PointsMaterial({
           size: Math.max(radius / 420, 0.004),
           sizeAttenuation: true,
@@ -93,12 +153,10 @@ viewers.forEach((container) => {
 
         camera.near = Math.max(radius / 1000, 0.001);
         camera.far = radius * 100;
-        camera.position.set(radius * 0.15, radius * 0.08, radius * 2.3);
         camera.updateProjectionMatrix();
-        controls.target.set(0, 0, 0);
         controls.minDistance = radius * 0.18;
         controls.maxDistance = radius * 8;
-        controls.update();
+        applyViewState(sharedViewState);
 
         status.hidden = true;
       },
@@ -111,7 +169,9 @@ viewers.forEach((container) => {
     );
   };
 
-  container.__pointCloudViewer = { loadPly };
+  viewer.loadPly = loadPly;
+  pointCloudViewers.push(viewer);
+  container.__pointCloudViewer = viewer;
   loadPly(container.dataset.ply);
 
   const animate = () => {
